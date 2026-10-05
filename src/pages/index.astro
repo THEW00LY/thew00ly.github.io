@@ -1,27 +1,46 @@
 ---
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
 import SaasShowcase from '../components/SaasShowcase.astro';
+import AcademicProjects from '../components/AcademicProjects.astro';
+import ResumeTimeline from '../components/ResumeTimeline.astro';
+import Contact from '../components/Contact.astro'; // <--- Import ici
 ---
 
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Portfolio</title>
-    <style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Portfolio | Développeur Full-Stack</title>
+    <style is:global>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 5rem;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
       body {
         margin: 0;
         background-color: #0b0f19;
+        color: #f8fafc;
       }
     </style>
   </head>
   <body>
-    <!-- Tu peux l'utiliser avec les valeurs par défaut ou en personnalisant les props -->
-    <SaasShowcase 
-      title="MonSaaS"
-      tagline="Gestion comptable et suivi de mission en temps réel"
-      demoUrl="https://ton-saas-en-ligne.com"
-      repoUrl="https://github.com/thew00ly/ton-repo-saas"
-    />
+    <Navbar logoText="thew00ly" />
+
+    <main style="padding-top: 4.5rem;">
+      <Hero />
+      <SaasShowcase />
+      <AcademicProjects />
+      <ResumeTimeline />
+      
+      <!-- Section Contact -->
+      <Contact 
+        accessKey="1aab00de-a520-4d0e-bf82-d3f9e81efe49" 
+        directEmail="ton.email@gmail.com" 
+        location="Paris, France • Distanciel"
+      />
+    </main>
   </body>
 </html>

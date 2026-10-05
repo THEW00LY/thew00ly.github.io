@@ -1,0 +1,344 @@
+---
+// src/components/Contact.astro
+interface Props {
+  // Obtiens ta clé gratuite en 10 secondes sur https://web3forms.com
+  accessKey?: string;
+  directEmail?: string;
+  location?: string;
+}
+
+const {
+  accessKey = "1aab00de-a520-4d0e-bf82-d3f9e81efe49",
+  directEmail = "contact@thew00ly.dev",
+  location = "France • Remote friendly"
+} = Astro.props;
+---
+
+<section id="contact" class="contact-section">
+  <div class="section-header">
+    <span class="badge-sub">Prendre contact</span>
+    <h2>Travaillons ensemble</h2>
+    <p>Une question, une proposition de mission ou envie d'échanger ? Envoyez-moi un message.</p>
+  </div>
+
+  <div class="contact-grid">
+    <!-- Colonne 1 : Coordonnées directes -->
+    <div class="contact-info">
+      <h3>Parlons de votre projet</h3>
+      <p class="info-desc">
+        Je réponds généralement en moins de 24h. Vous pouvez aussi me joindre directement par e-mail ou sur mes réseaux.
+      </p>
+
+      <div class="info-items">
+        <div class="info-item">
+          <div class="info-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <span class="info-label">E-mail</span>
+            <a href={`mailto:${directEmail}`} class="info-value">{directEmail}</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div>
+            <span class="info-label">Localisation</span>
+            <span class="info-value">{location}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne 2 : Formulaire de contact -->
+    <div class="form-wrapper">
+      <form id="contact-form" class="contact-form">
+        <!-- Clé API Web3Forms -->
+        <input type="hidden" name="access_key" value={accessKey} />
+        
+        <!-- Honeypot anti-spam : caché aux humains, attire les bots -->
+        <input type="checkbox" name="botcheck" class="hidden-bot" style="display: none;" />
+
+        <div class="input-group">
+          <label for="name">Votre nom</label>
+          <input type="text" id="name" name="name" placeholder="Ex: Alex Martin" required />
+        </div>
+
+        <div class="input-group">
+          <label for="email">Votre adresse e-mail</label>
+          <input type="email" id="email" name="email" placeholder="alex@entreprise.com" required />
+        </div>
+
+        <div class="input-group">
+          <label for="subject">Sujet</label>
+          <input type="text" id="subject" name="subject" placeholder="Opportunité / SaaS / Proposition" required />
+        </div>
+
+        <div class="input-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Détaillez votre projet ou votre demande..." required></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-submit">
+          <span id="btn-text">Envoyer le message</span>
+          <svg class="send-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+
+        <!-- Messages de statut -->
+        <div id="form-feedback" class="feedback-msg" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const btnText = document.getElementById('btn-text');
+  const feedback = document.getElementById('form-feedback');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!submitBtn || !btnText || !feedback) return;
+
+    // État de chargement
+    submitBtn.disabled = true;
+    btnText.textContent = "Envoi en cours...";
+    feedback.className = "feedback-msg";
+    feedback.textContent = "";
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        feedback.className = "feedback-msg success";
+        feedback.textContent = "✅ Message envoyé avec succès ! Je vous répondrai rapidement.";
+        form.reset();
+      } else {
+        feedback.className = "feedback-msg error";
+        feedback.textContent = "❌ Une erreur est survenue : " + (data.message || "Veuillez réessayer.");
+      }
+    } catch {
+      feedback.className = "feedback-msg error";
+      feedback.textContent = "❌ Impossible de contacter le serveur. Vérifiez votre connexion.";
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = "Envoyer le message";
+    }
+  });
+</script>
+
+<style>
+  .contact-section {
+    padding: 5rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    color: #e2e8f0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .badge-sub {
+    font-size: 0.85rem;
+    color: #818cf8;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .section-header h2 {
+    font-size: 2.25rem;
+    color: #ffffff;
+    margin: 0.5rem 0 0.75rem 0;
+  }
+
+  .section-header p {
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+    }
+  }
+
+  /* Infos de contact */
+  .contact-info h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 0 0 1rem 0;
+  }
+
+  .info-desc {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #818cf8;
+  }
+
+  .info-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .info-value {
+    color: #f1f5f9;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .info-value:hover {
+    color: #818cf8;
+  }
+
+  /* Formulaire */
+  .form-wrapper {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .input-group label {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+
+  .input-group input,
+  .input-group textarea {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-group input:focus,
+  .input-group textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.5rem;
+    background: #4f46e5;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.5rem;
+  }
+
+  .btn-submit:hover:not(:disabled) {
+    background: #4338ca;
+    transform: translateY(-2px);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Retours de soumission */
+  .feedback-msg {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5rem;
+    display: none;
+  }
+
+  .feedback-msg.success {
+    display: block;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+  }
+
+  .feedback-msg.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+  }
+</style>
