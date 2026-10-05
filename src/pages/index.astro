@@ -1,17 +1,27 @@
 ---
-
+import SaasShowcase from '../components/SaasShowcase.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Mon Portfolio</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #0b0f19;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Tu peux l'utiliser avec les valeurs par défaut ou en personnalisant les props -->
+    <SaasShowcase 
+      title="MonSaaS"
+      tagline="Gestion comptable et suivi de mission en temps réel"
+      demoUrl="https://ton-saas-en-ligne.com"
+      repoUrl="https://github.com/thew00ly/ton-repo-saas"
+    />
+  </body>
 </html>

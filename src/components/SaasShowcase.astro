@@ -1,0 +1,575 @@
+---
+// src/components/SaasShowcase.astro
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  description?: string;
+  features?: string[];
+  techStack?: string[];
+  demoUrl?: string;
+  repoUrl?: string;
+}
+
+const {
+  title = "FreelancePulse",
+  subtitle = "Projet Vedette • SaaS Full-Stack",
+  tagline = "Plateforme tout-en-un de facturation et gestion du temps pour freelances",
+  description = "Application web SaaS complète conçue pour automatiser les devis, générer des factures conformes et suivre le temps passé par client avec calcul automatique du taux horaire effectif.",
+  features = [
+    "Gestion multi-clients & facturation récurrente automatisée",
+    "Génération instantanée de devis/factures PDF conformes",
+    "Dashboard d'analyses financières avec métriques en temps réel",
+    "Authentification sécurisée par sessions chiffrées & rôles"
+  ],
+  techStack = ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Docker", "Tailwind CSS"],
+  demoUrl = "https://demo-mon-saas.com",
+  repoUrl = "https://github.com/thew00ly/freelance-pulse"
+} = Astro.props;
+---
+
+<section id="saas-showcase" class="showcase-section">
+  <!-- En-tête de section -->
+  <div class="section-header">
+    <span class="badge-accent">{subtitle}</span>
+    <h2>{title}</h2>
+    <p class="tagline">{tagline}</p>
+  </div>
+
+  <div class="showcase-grid">
+    <!-- Colonne 1 : Détails techniques, fonctionnalités et CTA -->
+    <div class="showcase-info">
+      <div class="status-indicator">
+        <span class="pulse-dot"></span>
+        <span class="status-text">Déployé sur serveur externe • En ligne</span>
+      </div>
+
+      <p class="description">{description}</p>
+
+      <div class="features-block">
+        <h3>Points clés d'ingénierie</h3>
+        <ul>
+          {features.map((feature) => (
+            <li>
+              <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="tech-stack-block">
+        <span class="tech-label">Technologies utilisées :</span>
+        <div class="tags-container">
+          {techStack.map((tech) => (
+            <span class="tag">{tech}</span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Actions CTA -->
+      <div class="actions">
+        <a href={demoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          Tester la démo live
+        </a>
+        <a href={repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          Code source
+        </a>
+      </div>
+    </div>
+
+    <!-- Colonne 2 : Mockup visuel façon fenêtre navigateur -->
+    <div class="showcase-visual">
+      <div class="browser-mockup">
+        <!-- Barre de titre du navigateur -->
+        <div class="browser-bar">
+          <div class="dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="address-bar">
+            <span>https://app.mon-saas.fr/dashboard</span>
+          </div>
+        </div>
+
+        <!-- Corps de l'aperçu du Dashboard -->
+        <div class="mockup-content">
+          <!-- Mini navigation du dashboard -->
+          <div class="mockup-sidebar">
+            <div class="sidebar-item active"></div>
+            <div class="sidebar-item"></div>
+            <div class="sidebar-item"></div>
+            <div class="sidebar-item"></div>
+          </div>
+
+          <!-- Contenu simulé du dashboard -->
+          <div class="mockup-main">
+            <!-- Cartes statistiques -->
+            <div class="metric-row">
+              <div class="mini-card highlight">
+                <span class="card-label">CA du mois</span>
+                <span class="card-value">4 850 €</span>
+              </div>
+              <div class="mini-card">
+                <span class="card-label">Factures en attente</span>
+                <span class="card-value">2</span>
+              </div>
+              <div class="mini-card">
+                <span class="card-label">Heures facturées</span>
+                <span class="card-value">38.5 h</span>
+              </div>
+            </div>
+
+            <!-- Faux graphe -->
+            <div class="chart-box">
+              <div class="chart-header">
+                <span>Évolution du chiffre d'affaires</span>
+                <span class="badge-mini">+24%</span>
+              </div>
+              <div class="chart-bars">
+                <div class="bar" style="height: 45%;"></div>
+                <div class="bar" style="height: 60%;"></div>
+                <div class="bar" style="height: 35%;"></div>
+                <div class="bar" style="height: 80%;"></div>
+                <div class="bar" style="height: 70%;"></div>
+                <div class="bar active" style="height: 95%;"></div>
+              </div>
+            </div>
+
+            <!-- Faux tableau de factures récentes -->
+            <div class="table-box">
+              <div class="table-row head">
+                <span>Client</span>
+                <span>Statut</span>
+                <span>Montant</span>
+              </div>
+              <div class="table-row">
+                <span>Studio Nova</span>
+                <span class="pill green">Payée</span>
+                <span>1 400 €</span>
+              </div>
+              <div class="table-row">
+                <span>Acme Corp</span>
+                <span class="pill orange">En cours</span>
+                <span>950 €</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Base de la section */
+  .showcase-section {
+    padding: 5rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #e2e8f0;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Header */
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .badge-accent {
+    display: inline-block;
+    padding: 0.25rem 0.85rem;
+    border-radius: 9999px;
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    font-size: 0.825rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0.25rem 0 0.75rem 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+
+  .tagline {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Grille 2 colonnes */
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .showcase-grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  /* Statut en ligne (Pulse) */
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 6px;
+    font-size: 0.825rem;
+    color: #34d399;
+    margin-bottom: 1.25rem;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+
+  .description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+  }
+
+  /* Liste des fonctionnalités */
+  .features-block {
+    margin-bottom: 2rem;
+  }
+
+  .features-block h3 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+  }
+
+  .features-block ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .features-block li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.95rem;
+    color: #e2e8f0;
+  }
+
+  .check-icon {
+    color: #6366f1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Badges tech */
+  .tech-stack-block {
+    margin-bottom: 2.25rem;
+  }
+
+  .tech-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 0.6rem;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.65rem;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+
+  /* Boutons */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: #4f46e5;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+  }
+
+  .btn-primary:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+  }
+
+  .btn-secondary:hover {
+    background: #334155;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Mockup Navigateur */
+  .browser-mockup {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.65rem 1rem;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+  }
+
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot.red { background: #ef4444; }
+  .dot.yellow { background: #f59e0b; }
+  .dot.green { background: #10b981; }
+
+  .address-bar {
+    flex: 1;
+    background: #0f172a;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-family: monospace;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Intérieur de l'application simulée */
+  .mockup-content {
+    display: flex;
+    min-height: 380px;
+    background: #0b1120;
+  }
+
+  .mockup-sidebar {
+    width: 48px;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .sidebar-item {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #1e293b;
+  }
+
+  .sidebar-item.active {
+    background: #4f46e5;
+  }
+
+  .mockup-main {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Métriques */
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .mini-card {
+    background: #131c31;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mini-card.highlight {
+    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(99, 102, 241, 0.08);
+  }
+
+  .card-label {
+    font-size: 0.65rem;
+    color: #94a3b8;
+  }
+
+  .card-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f8fafc;
+  }
+
+  /* Faux Graphique */
+  .chart-box {
+    background: #131c31;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 0.85rem;
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    margin-bottom: 0.85rem;
+  }
+
+  .badge-mini {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    height: 70px;
+    padding-top: 0.5rem;
+  }
+
+  .bar {
+    flex: 1;
+    background: #1e293b;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .bar.active {
+    background: #6366f1;
+  }
+
+  /* Faux Tableau */
+  .table-box {
+    background: #131c31;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .table-row.head {
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .pill {
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+  }
+
+  .pill.green {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+  }
+
+  .pill.orange {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+  }
+</style>
