@@ -252,4 +252,42 @@ const navLinks = [
     transition: all 0.25s ease;
   }
 
-  .mobile-drawer
+  .mobile-drawer.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mobile-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobile-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .mobile-socials {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-social {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: #1e293b;
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>
