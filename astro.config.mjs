@@ -9,5 +9,5 @@ export default defineConfig({
 
   site: 'http://thew00ly.github.io',
 
-  base: '/portfolio',
+  base: '/',
 });
