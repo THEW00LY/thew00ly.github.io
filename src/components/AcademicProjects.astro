@@ -8,32 +8,36 @@ interface Project {
   challenge: string;
   tags: string[];
   repoUrl: string;
+  type: "Projet Académique" | "Expérience Pro";
 }
 
 const projects: Project[] = [
   {
-    title: "Moteur d'indexation & Recherche",
-    category: "Algorithmique & Données",
-    description: "Conception d'un index inversé avec calcul de score TF-IDF pour l'interrogation rapide de gros volumes textuels.",
-    challenge: "Optimisation de l'empreinte mémoire et gestion des structures de données en C++.",
-    tags: ["C++", "Algorithmique", "Structures de données"],
-    repoUrl: "https://github.com/thew00ly/search-engine"
+    title: "Moteur d'IA & Exploration de Jeux",
+    category: "Rust & Théorie des Jeux",
+    description: "Implémentation d'algorithmes de recherche décisionnelle pour environnements déterministes, stochastiques et adversariaux.",
+    challenge: "Résolution Minimax avec élagage Alpha-Bêta (Dames), recherche heuristique A* (Taquin) et Expectimax (2048) avec optimisation mémoire sans ramasse-miettes.",
+    tags: ["Rust", "Minimax / Alpha-Bêta", "A*", "Expectimax", "Théorie des jeux"],
+    repoUrl: "https://github.com/THEW00LY/TP-IA-RUST",
+    type: "Projet Académique"
   },
   {
-    title: "API Microservices & Message Broker",
-    category: "Architecture Backend",
-    description: "Système de traitement asynchrone de commandes avec gestion des défaillances et files de messages.",
-    challenge: "Mise en place de RabbitMQ et cohérence éventuelle des données sous charge.",
-    tags: ["Node.js", "Docker", "RabbitMQ", "PostgreSQL"],
-    repoUrl: "https://github.com/thew00ly/microservices-demo"
+    title: "Messagerie Concurrente Distribuée",
+    category: "Systèmes Distribués & Réseaux",
+    description: "Serveur d'échange en temps réel multi-clients avec gestion des flux asynchrones et tolérance aux défaillances réseau.",
+    challenge: "Synchronisation mémoire des états partagés, gestion fine de la concurrence multithread et communication bas niveau par sockets TCP/IP.",
+    tags: ["Java", "Sockets TCP/IP", "Multithreading", "Réseaux", "Linux"],
+    repoUrl: "https://github.com/insa-4ir-chatsystem/chatsystem-2526-c1-hajji-vaccaro", // Remplace par le lien direct du repo si disponible
+    type: "Projet Académique"
   },
   {
-    title: "Compilateur Mini-Langage",
-    category: "Théorie des Langages",
-    description: "Analyse lexicale, syntaxique et génération de bytecode pour un sous-ensemble impératif.",
-    challenge: "Construction de l'arbre syntaxique abstrait (AST) et typage statique.",
-    tags: ["Java", "ANTLR", "Compilateurs"],
-    repoUrl: "https://github.com/thew00ly/compiler-project"
+    title: "Intégration & Requêtage de Données Sémantiques",
+    category: "Data Engineering & Web Sémantique",
+    description: "Harmonisation, alignement ontologique de graphes RDF hétérogènes (Projet ANR Solidamin) et mise à disposition d'une interface visuelle de requêtage.",
+    challenge: "Alignement ontologique (OWL, OntoME), requêtage complexe SPARQL via GraphDB et développement d'un micro-proxy Python gérant l'interopérabilité et les politiques CORS.",
+    tags: ["GraphDB", "SPARQL", "RDF / OWL", "Python", "OntoME", "Docker"],
+    repoUrl: "https://github.com/THEW00LY/Sparnatural-Solidamin", // Remplace par le lien direct ou vers le profil
+    type: "Expérience Pro"
   }
 ];
 ---
@@ -55,6 +59,12 @@ const projects: Project[] = [
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
           </a>
+        </div>
+
+        <div>
+            <span class={`type-badge ${p.type === "Expérience Pro" ? "badge-pro" : "badge-academic"}`}>
+                {p.type}
+            </span>
         </div>
 
         <h3 class="card-title">{p.title}</h3>
@@ -192,4 +202,31 @@ const projects: Project[] = [
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
   }
+
+  /* Base commune pour tous les badges de type */
+    .type-badge {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 0.2rem 0.6rem;
+        border-radius: 9999px; /* Forme de pilule */
+        margin-bottom: 0.75rem;
+    }
+
+    /* Style spécifique pour Expérience Pro (Teinte Émeraude / Vert technique) */
+    .badge-pro {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    /* Style spécifique pour Projet Académique (Teinte Indigo / Violet) */
+    .badge-academic {
+        background: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+
 </style>
