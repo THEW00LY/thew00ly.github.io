@@ -4,42 +4,74 @@ import Hero from '../components/Hero.astro';
 import SaasShowcase from '../components/SaasShowcase.astro';
 import AcademicProjects from '../components/AcademicProjects.astro';
 import ResumeTimeline from '../components/ResumeTimeline.astro';
-import Contact from '../components/Contact.astro'; // <--- Import ici
+import Contact from '../components/Contact.astro';
 ---
 
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mon Portfolio | Développeur Full-Stack</title>
+    <title>Portfolio | Développeur Full-Stack</title>
+
     <style is:global>
+      /* Reset & Styles globaux indispensables */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
       html {
         scroll-behavior: smooth;
         scroll-padding-top: 5rem;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      body {
-        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         background-color: #0b0f19;
         color: #f8fafc;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #0b0f19;
+        color: #f8fafc;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
       }
     </style>
   </head>
   <body>
-    <Navbar logoText="thew00ly" />
+    <!-- Navbar fixe en haut -->
+    <Navbar 
+      logoText="thew00ly" 
+      githubUrl="https://github.com/thew00ly" 
+    />
 
+    <!-- Conteneur principal avec marge haute pour la navbar -->
     <main style="padding-top: 4.5rem;">
-      <Hero />
-      <SaasShowcase />
+      <Hero 
+        name="Ton Prénom"
+        role="Développeur Full-Stack & Étudiant en Ingénierie"
+        cvPath="/cv.pdf"
+      />
+
+      <SaasShowcase 
+        title="FreelancePulse"
+        tagline="Plateforme tout-en-un de gestion financière et suivi du temps"
+        demoUrl="https://demo-mon-saas.com"
+        repoUrl="https://github.com/thew00ly"
+      />
+
       <AcademicProjects />
+
       <ResumeTimeline />
-      
-      <!-- Section Contact -->
+
       <Contact 
-        accessKey="1aab00de-a520-4d0e-bf82-d3f9e81efe49" 
-        directEmail="ton.email@gmail.com" 
-        location="Paris, France • Distanciel"
+        directEmail="ton-email@example.com"
+        location="France • Distanciel"
       />
     </main>
   </body>
